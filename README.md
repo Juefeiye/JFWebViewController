@@ -10,9 +10,13 @@
 
 前端代码示例
 
-无回调:  kf.toast('这是提示') 
+无回调:  
+            
+        kf.toast('这是提示') 
 
-有回调:  kf.saveImageToLocal('this.base64', function(imagePath) { 
+有回调:  
+
+        kf.saveImageToLocal('this.base64', function(imagePath) { 
             
         // do something...
             
