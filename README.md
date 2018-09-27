@@ -4,6 +4,8 @@
 
 直接继承JFWebViewController，初始化JFWebview即可
 
+            load(withUrl: "https://...")
+
 如需使用toast，需要pod第三方NVActivityIndicatorView，也可以使用自己的toast组件
 
 前端交互使用到kf对象，也可自行定义对象名称
