@@ -21,7 +21,7 @@ extension JFWebViewController: JFWebViewProtocol {
     //其他方法子类按需重写即可
     
     func save(_ image: String) {
-        //ViewController重写
+        
     }
 
 }

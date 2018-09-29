@@ -25,7 +25,6 @@
 
 import UIKit
 import ObjectiveC
-import NVActivityIndicatorView
 
 /**
  Toast is a Swift extension that adds toast notifications to the `UIView` object class.
@@ -237,48 +236,8 @@ public extension UIView {
         queue.removeAllObjects()
     }
     
-    // MARK: - Activity Methods
-    
-    /**
-     Creates and displays a new toast activity indicator view at a specified position.
-     
-     @warning Only one toast activity indicator view can be presented per superview. Subsequent
-     calls to `makeToastActivity(position:)` will be ignored until `hideToastActivity()` is called.
-     
-     @warning `makeToastActivity(position:)` works independently of the `showToast` methods. Toast
-     activity views can be presented and dismissed while toast views are being displayed.
-     `makeToastActivity(position:)` has no effect on the queueing behavior of the `showToast` methods.
-     
-     @param position The toast's position
-     */
-    public func makeToastActivity(_ position: ToastPosition,message:String? = nil) {
-        // sanity
-        guard objc_getAssociatedObject(self, &ToastKeys.activityView) as? UIView == nil else { return }
-        
-        let toast = createToastActivityView(message)
-        let point = position.centerPoint(forToast: toast, inSuperview: self)
-        makeToastActivity(toast, point: point)
-    }
-    
-    /**
-     Creates and displays a new toast activity indicator view at a specified position.
-     
-     @warning Only one toast activity indicator view can be presented per superview. Subsequent
-     calls to `makeToastActivity(position:)` will be ignored until `hideToastActivity()` is called.
-     
-     @warning `makeToastActivity(position:)` works independently of the `showToast` methods. Toast
-     activity views can be presented and dismissed while toast views are being displayed.
-     `makeToastActivity(position:)` has no effect on the queueing behavior of the `showToast` methods.
-     
-     @param point The toast's center point
-     */
-    public func makeToastActivity(_ point: CGPoint ,message:String? = nil) {
-        // sanity
-        guard objc_getAssociatedObject(self, &ToastKeys.activityView) as? UIView == nil else { return }
-        
-        let toast = createToastActivityView(message)
-        makeToastActivity(toast, point: point)
-    }
+
+
     
     /**
      Dismisses the active toast activity indicator view.
@@ -308,68 +267,6 @@ public extension UIView {
         UIView.animate(withDuration: ToastManager.shared.style.fadeDuration, delay: 0.0, options: .curveEaseOut, animations: {
             toast.alpha = 1.0
         })
-    }
-    
-    private func createToastActivityView(_ message:String?) -> UIView {
-        let style = ToastManager.shared.style
-        
-        let activityView = UIView(frame: bounds)
-        activityView.backgroundColor = .clear
-        activityView.autoresizingMask = [.flexibleLeftMargin, .flexibleRightMargin, .flexibleTopMargin, .flexibleBottomMargin]
-        activityView.layer.cornerRadius = style.cornerRadius
-        
-        if style.displayShadow {
-            activityView.layer.shadowColor = style.shadowColor.cgColor
-            activityView.layer.shadowOpacity = style.shadowOpacity
-            activityView.layer.shadowRadius = style.shadowRadius
-            activityView.layer.shadowOffset = style.shadowOffset
-        }
-        
-        let tostView = UIView(frame: CGRect.zero)
-        tostView.backgroundColor = style.activityBackgroundColor
-        tostView.cornerRadius = 5
-        activityView.addSubview(tostView)
-        
-        let activityIndicatorView = NVActivityIndicatorView(frame: CGRect(x: 0.0, y: 0.0, width: style.activitySize.width, height: style.activitySize.height), type: .circleStrokeSpin, color: style.activityIndicatorColor, padding: nil)
-        
-        activityIndicatorView.startAnimating()
-        
-        tostView.width = style.activitySize.width + 20
-        tostView.height = style.activitySize.height + 20
-        tostView.center = CGPoint(x: activityView.width/2, y: activityView.height/2)
-        activityIndicatorView.center = CGPoint(x: tostView.width/2, y:tostView.height/2)
-        tostView.addSubview(activityIndicatorView)
-        
-        if let msg = message {
-            let messageLabel = UILabel()
-            messageLabel.text = msg
-            messageLabel.numberOfLines = style.messageNumberOfLines
-            messageLabel.font = style.messageFont
-            messageLabel.textAlignment = .center
-            messageLabel.lineBreakMode = .byTruncatingTail
-            messageLabel.textColor = style.messageColor
-            messageLabel.backgroundColor = UIColor.clear
-            
-            let maxMessageSize = CGSize(width: (self.bounds.size.width * style.maxWidthPercentage), height: self.bounds.size.height * style.maxHeightPercentage)
-            let messageSize = messageLabel.sizeThatFits(maxMessageSize)
-            let actualWidth = min(messageSize.width, maxMessageSize.width)
-            let actualHeight = min(messageSize.height, maxMessageSize.height)
-            messageLabel.frame = CGRect(x: 0.0, y: 0.0, width: actualWidth, height: actualHeight)
-            
-            let padding : CGFloat = 10
-            
-            tostView.height += (messageLabel.height+padding)
-            tostView.width = (messageLabel.width+padding*2)
-            tostView.center = CGPoint(x: activityView.width/2, y: activityView.height/2)
-            activityIndicatorView.top = 10
-            activityIndicatorView.centerX = tostView.width/2
-            messageLabel.top = activityIndicatorView.bottom + padding
-            messageLabel.centerX = activityIndicatorView.centerX
-            tostView.addSubview(messageLabel)
-        }
-        
-        
-        return activityView
     }
     
     // MARK: - Private Show/Hide Methods

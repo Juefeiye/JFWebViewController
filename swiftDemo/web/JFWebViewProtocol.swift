@@ -9,12 +9,6 @@ import UIKit
 @objc protocol JFWebViewProtocol:NSObjectProtocol{
 
     
-    /*
-     * toast
-     * params: message
-     * message
-     *
-     */
     @objc optional func toast(_ message:String)
  
 

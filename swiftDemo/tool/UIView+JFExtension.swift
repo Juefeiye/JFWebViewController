@@ -7,17 +7,7 @@
 import UIKit
 
 extension UIView{
-    
-    func showActivity(_ message : String? = nil) {
-        makeToastActivity(.center, message: message)
-    }
-    
-    func hideActivity() {
-        self.hideToastActivity()
-    }
-    
     func showToast(_ message:String?) {
-        self.hideToastActivity()
         self.makeToast(message, point: CGPoint(x:self.width/2,y:self.height/2), title: nil, image: nil, completion: nil)
     }
 }
