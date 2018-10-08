@@ -40,7 +40,7 @@ class JFWebView: WKWebView {
         //MARK:注入UA， ios9 可以 customUA
         let webView = UIWebView(frame: frame)
         let userAgent = webView.stringByEvaluatingJavaScript(from: "navigator.userAgent")
-        let v = "XingbookStory/\(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String)"
+        let v = "Your UA"
         if var newUserAgent = userAgent, !newUserAgent.contains(v){
             newUserAgent = v + newUserAgent
             let dictionary = ["UserAgent":newUserAgent]
