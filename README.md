@@ -1,6 +1,6 @@
 # JFWebViewController
 
-使用
+使用 https://www.jianshu.com/p/afc52a5a28db
 
 直接继承JFWebViewController，加载网页即可
 

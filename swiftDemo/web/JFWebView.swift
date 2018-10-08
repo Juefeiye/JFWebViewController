@@ -64,6 +64,7 @@ class JFWebView: WKWebView {
         }
         config.userContentController = WKUserContentController()
         config.userContentController.add(WeakScriptMessageDelegate.init(scriptDelegate: delegate as WKScriptMessageHandler), name: JSObjectName)
+        
         //注入cookie
 //        let cookieScript = WKUserScript(source: BaseWebView.cookiesForWeb(), injectionTime: .atDocumentStart, forMainFrameOnly: false)
 //        config.userContentController.addUserScript(cookieScript)
